@@ -11,10 +11,9 @@ class ProductList {
         productList.add(product)
     }
 
-    fun removeItem(position: Int) {
-        productList.removeAt(position)
+    fun removeItem(position: Int): ProductClass {
+        return productList.removeAt(position)
     }
-
 
 
 

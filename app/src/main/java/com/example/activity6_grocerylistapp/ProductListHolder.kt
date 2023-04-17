@@ -1,14 +1,17 @@
 package com.example.activity6_grocerylistapp
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class ProductListHolder(private val productList: ProductList):
+
+class ProductListHolder( private val productList: ProductList,private val context: Context):
     RecyclerView.Adapter<ProductListHolder.ProductViewHolder>() {
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -27,6 +30,13 @@ class ProductListHolder(private val productList: ProductList):
             price.text = product.price
             description.text = product.descriptions
         }
+
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                removeItem(position)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -38,16 +48,14 @@ class ProductListHolder(private val productList: ProductList):
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = productList.getItems()[position]
         holder.bind(product)
-
-        holder.itemView.setOnClickListener {
-            removeItem(position)
-        }
     }
 
     override fun getItemCount() = productList.getItems().size
 
     fun removeItem(position: Int) {
-        productList.removeItem(position)
+        val removedItem = productList.removeItem(position)
         notifyItemRemoved(position)
+        val message = "${removedItem.productTitle} removed from the list."
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

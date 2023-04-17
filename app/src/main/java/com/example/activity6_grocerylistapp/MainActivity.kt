@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
 
         productList = ProductList()
-        adapter = ProductListHolder(productList)
+        adapter = ProductListHolder(productList,this)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
